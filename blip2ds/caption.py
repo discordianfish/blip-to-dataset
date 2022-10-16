@@ -31,10 +31,10 @@ def captions(image_dir: str, image_size: int):
     logger.info("Processing images")
     for root, _, files in os.walk(image_dir):
         for file in files:
-
+            logger.info("Processing %s", file)
             path = os.path.join(root, file)
-            captionPath = os.path.splitext(path)[0] + ".txt"
-            if os.path.exists(captionPath):
+            caption_path = os.path.splitext(path)[0] + ".txt"
+            if os.path.exists(caption_path):
                 continue
 
             try:
@@ -44,7 +44,7 @@ def captions(image_dir: str, image_size: int):
                 continue
 
             caption = labeler.Caption(image)[0]
-            with open(captionPath, "w", encoding="utf-8") as file:
+            with open(caption_path, "w", encoding="utf-8") as file:
                 file.write(caption)
             image.close()
             logger.info("Caption for %s: %s", path, caption)

@@ -5,7 +5,9 @@ import argparse
 import logging
 
 from blip2ds.caption import captions
-from blip2ds.dataset import dataset, Operation
+from blip2ds.dataset import dataset, Operation, Format
+
+logger = logging.getLogger(__name__)
 
 logging.basicConfig(level=logging.INFO)
 
@@ -26,6 +28,8 @@ def main():
     dataset_command.add_argument("image_dir", help="Directory with images")
     dataset_command.add_argument("dataset_dir", help="Directory to create dataset in")
     dataset_command.add_argument('--operation', type=Operation, choices=list(Operation))
+    dataset_command.add_argument('--format', type=Format, choices=list(Format),
+        dest="output_format")
 
     kwargs = vars(parser.parse_args())
     globals()[kwargs.pop('command')](**kwargs)
